@@ -7,5 +7,5 @@ services:
       - .:/app
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - BASE_URL=http://localhost:11434
+      - REACT_APP_BASE_URL=http://localhost:11434
     command: [ "npm", "start" ]

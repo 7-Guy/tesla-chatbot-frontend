@@ -2,7 +2,7 @@ import {Question} from "../models/Question";
 import {Exhibit} from "../models/Exhibit";
 import {Answer} from "../models/Answer";
 
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:11434";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export async function fetchResponse(question: Question, exhibit: Exhibit, model: string): Promise<string> {
     const prompt: string = "Act as if you were Nikola Tesla. Let's talk about the"
@@ -78,10 +78,13 @@ export async function fetchNextResponse(questions: Question[], answers: Answer[]
 export async function fetchModels() {
     return fetch(`${BASE_URL}/api/tags`)
         .then((response) => response.json())
-        .catch((error) => console.log('could not fetch models from ollama: ', error))
         .then((data) => {
             const models: string[] = data.models.map((model: any) => model.model);
             return models;
+        })
+        .catch((error) => {
+            console.log('could not fetch models from ollama: ', error)
+            return [];
         });
 }
 
